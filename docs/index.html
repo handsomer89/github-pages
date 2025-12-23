@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- 
+    ============================================
+    头部区域 - 页面基本设置和外部资源
+    ============================================
+    
+    修改说明：
+    1. 修改<title>标签中的文本可以更改浏览器标签页显示的标题
+    2. 修改lang属性可以更改页面语言（如zh-CN表示中文）
+    3. 可以添加其他CSS或JavaScript库的链接
+    4. 可以更改Google字体来使用不同的字体风格
+    -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>神秘的17个人博客</title>
+    <!-- Font Awesome图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
+    <!-- Google字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Mono:wght@300;400&display=swap" rel="stylesheet">
+    <!-- 手写字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* 
+        ============================================
+        CSS变量（自定义属性） - 主题颜色和样式设置
+        ============================================
+        
+        修改说明：
+        1. 修改--primary-color可以更改网站的主色调（按钮、链接、标题等）
+        2. 修改--secondary-color可以更改网站的次要颜色（悬停效果等）
+        3. 修改--accent-color可以更改强调色（边框、图标等）
+        4. 修改--dark-color和--light-color可以更改深色和浅色文本
+        5. 修改--card-bg可以更改卡片背景颜色
+        6. 修改--shadow可以更改阴影效果
+        7. 修改--transition可以更改动画过渡效果
+        
+        示例：将主色调改为红色 #ff4757
+        --primary-color: #ff4757;
+        */
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3a0ca3;
+            --accent-color: #4cc9f0;
+            --dark-color: #1a1a2e;
+            --light-color: #f8f9fa;
+            --gray-color: #6c757d;
+            --success-color: #4ade80;
+            --card-bg: #ffffff;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: url('backgrond.png') no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            padding: 40px 0;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            color: var(--accent-color);
+        }
+
+        .tagline {
+            font-size: 1.4rem;
+            color: var(--black-color);
+            font-family: 'Dancing Script', cursive;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-bottom: 30px;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            background: var(--card-bg);
+            border-radius: 50%;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            text-decoration: none;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            transform: translateY(-5px);
+            background: var(--primary-color);
+            color: white;
+        }
+
+        main {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 40px;
+        }
+
+        @media (min-width: 992px) {
+            main {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: var(--dark-color);
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--accent-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title i {
+            color: var(--primary-color);
+        }
+
+        .intro-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 25px;
+        }
+
+        .highlight {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 25px;
+        }
+
+        .skill-tag {
+            background: rgba(67, 97, 238, 0.1);
+            color: var(--primary-color);
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+.project-card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transition: var(--transition);
+    border: 1px solid #eee;
+    display: flex;
+    flex-direction: column;
+}
+
+        .project-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .project-image {
+            height: 180px;
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+
+.project-content {
+    padding: 25px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+        .project-title {
+            font-size: 1.3rem;
+            color: var(--dark-color);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+.project-description {
+    color: var(--gray-color);
+    font-size: 0.95rem;
+    margin-bottom: 20px;
+    line-height: 1.6;
+    flex-grow: 1;
+}
+
+        .project-link {
+            display: inline-block;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 500;
+            transition: var(--transition);
+            font-size: 0.95rem;
+        }
+
+        .project-link:hover {
+            background: var(--secondary-color);
+            transform: scale(1.05);
+        }
+
+        .project-link i {
+            margin-left: 8px;
+            font-size: 0.9rem;
+        }
+
+        .contact-info {
+            margin-top: 30px;
+            padding-top: 25px;
+            border-top: 1px solid #eee;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .contact-item i {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            width: 30px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            margin-top: 60px;
+            color: var(--gray-color);
+            font-size: 0.95rem;
+            border-top: 1px solid #eee;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--card-bg);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            z-index: 100;
+            transition: var(--transition);
+        }
+
+        .theme-toggle:hover {
+            transform: rotate(30deg);
+        }
+
+        .theme-toggle i {
+            font-size: 1.3rem;
+            color: var(--primary-color);
+        }
+
+        /* Dark theme */
+        body.dark-theme {
+            --dark-color: #f8f9fa;
+            --light-color: #1a1a2e;
+            --card-bg: #16213e;
+            --gray-color: #b0b7c3;
+            background: url('backgrond.png') no-repeat center center fixed;
+            background-size: cover;
+            color: #e2e2e2;
+            position: relative;
+        }
+        
+        body.dark-theme::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4); /* 40%黑色覆盖层，降低背景亮度 */
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        body.dark-theme .card {
+            background: var(--card-bg);
+            color: #e2e2e2;
+        }
+
+        body.dark-theme .project-card {
+            background: #1a1a2e;
+            border-color: #2d2d4a;
+        }
+
+        body.dark-theme .intro-text,
+        body.dark-theme .project-description {
+            color: #b0b7c3;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 15px;
+            }
+            
+            .card {
+                padding: 30px 25px;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .logo {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 
+    ============================================
+    页面主体结构 - 整体布局
+    ============================================
+    
+    页面主要组成部分：
+    1. 主题切换按钮 (.theme-toggle) - 右上角的暗色/亮色主题切换
+    2. 容器 (.container) - 页面内容的最大宽度容器
+    3. 页头 (header) - 包含logo、标语和社交链接
+    4. 主要内容区域 (main) - 包含"关于我"和"我的项目"两个部分
+    5. 页脚 (footer) - 版权信息
+    -->
+    
+    <!-- 主题切换按钮 - 点击可以在亮色和暗色主题之间切换 -->
+    <div class="theme-toggle" id="themeToggle">
+        <i class="fas fa-moon"></i>
+    </div>
+
+    <!-- 主容器 - 控制页面内容的最大宽度和边距 -->
+    <div class="container">
+        <!-- 
+        ============================================
+        页头区域 - Logo、标语和社交链接
+        ============================================
+        
+        修改说明：
+        1. 修改logo中的图标：将fas fa-code改为其他Font Awesome图标
+          示例：<i class="fas fa-laptop-code"></i>
+        2. 修改logo中的文本：将"DevBlog"改为你的名字或品牌名
+        3. 修改标语：将"Full-Stack Developer & Tech Enthusiast"改为你的个人标语
+        4. 修改社交链接：更新href属性为你的实际社交账号链接
+          注意：target="_blank"表示在新标签页打开，title属性是鼠标悬停提示
+        -->
+        <header>
+            <!-- Logo区域 - 包含图标和文本 -->
+            <div class="logo">
+                <i class="fa fa-blog"></i>
+                <span>神秘的小空间</span>
+            </div>
+            
+            <!-- 个人标语 - 简短描述你的身份或专长 -->
+            <p class="tagline">努力做两年半的个人练习生</p>
+            
+            <!-- 社交链接 - 链接到你的社交媒体和联系方式 -->
+            <div class="social-links">
+                <a href="https://github.com/handsomer89" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+                <a href="https://www.steam.com" target="_blank" title="Steam"><i class="fab fa-steam-square"></i></a>
+                <a href="https://space.bilibili.com/434097858?spm_id_from=333.1007.0.0" target="_blank" title="Bilibili"><i class="fab fa-bilibili"></i></a>
+                <a href="https://www.pixiv.net/users/49335621" target="_blank" title="Pixiv"><i class="fa-brands fa-pixiv"></i></a>
+                <a href="mailto:han1192688287@gmail.com" title="Email"><i class="fas fa-envelope"></i></a>
+            </div>
+        </header>
+
+        <main>
+            <!-- 
+            ============================================
+            "关于我"部分 - 个人介绍、技能和联系信息
+            ============================================
+            
+            修改说明：
+            1. 修改个人姓名：将<span class="highlight">Alex Chen</span>中的"Alex Chen"改为你的名字
+            2. 修改个人介绍：编辑三个<p class="intro-text">段落中的文本，描述你的背景、经验和兴趣
+            3. 修改技能标签：在<div class="skills">中添加或删除<span class="skill-tag">元素
+              示例：添加新技能标签 <span class="skill-tag">Vue.js</span>
+              示例：删除不需要的技能标签
+            4. 修改联系信息：
+              - 修改地址：将"San Francisco, CA"改为你的实际地址
+              - 修改邮箱：将"alex@devblog.com"改为你的邮箱地址
+              - 修改电话：将"+1 (555) 123-4567"改为你的电话号码
+            5. 添加更多联系信息：可以复制<div class="contact-item">结构来添加更多联系方式
+              示例：添加网站链接
+              <div class="contact-item">
+                  <i class="fas fa-globe"></i>
+                  <span>https://yourwebsite.com</span>
+              </div>
+            -->
+            <section class="card">
+                <h2 class="section-title">
+                    <i class="fas fa-user"></i>
+                    关于我
+                </h2>
+                
+                <p class="intro-text">
+                    你好! 我是 <span class="highlight">小韩</span>, 欢迎来到我的个人博客。
+                </p>
+                
+                <p class="intro-text">
+                    现在先让我保持神秘。
+                </p>
+                
+                <div class="skills">
+                    <span class="skill-tag">Python</span>
+                    <span class="skill-tag">Godot</span>
+                </div>
+                
+            </section>
+            
+            <!-- 
+            ============================================
+            "我的项目"部分 - 项目展示和链接
+            ============================================
+            
+            修改说明：
+            1. 修改项目介绍文本：编辑<p class="intro-text">中的文本，描述你的项目集合
+            2. 添加/修改项目卡片：每个项目卡片包含：
+               - 项目图标：修改<div class="project-image">中的图标
+               - 项目标题：修改<h3 class="project-title">中的文本
+               - 项目描述：修改<p class="project-description">中的文本
+               - 项目链接：修改<a class="project-link">中的href属性来指向实际项目地址
+               - 注意：可以添加或删除项目卡片，确保每个卡片都在<div class="projects-grid">内
+            3. 添加更多项目：复制整个<div class="project-card">结构来添加新项目
+            4. 删除项目：删除不需要的<div class="project-card">元素
+            -->
+            <section class="card">
+                <h2 class="section-title">
+                    <i class="fas fa-code-branch"></i>
+                    我的项目
+                </h2>
+                
+                <div class="projects-grid">
+                    <!-- 项目卡片 1 -->
+                    <div class="project-card">
+                        <div class="project-image">
+                            <i class="fa-brands fa-unity"></i>
+                        </div>
+                        <div class="project-content">
+                            <h3 class="project-title">美味连连</h3>
+                            <p class="project-description">
+                                使用godot开发的连连看游戏。
+                            </p>
+                            <a href="Tasty LinkLink.html" class="project-link" target="_blank">
+                                浏览此项目 <i class="fas fa-external-link-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- 项目卡片 2 -->
+                    <div class="project-card">
+                        <div class="project-image">
+                            <i class="fa-solid fa-chess-board"></i>
+                        </div>
+                        <div class="project-content">
+                            <h3 class="project-title">网页可爱食品连连看</h3>
+                            <p class="project-description">
+                                通过AI设计的网页版连连看小游戏，用于丰富我的博客主页。
+                            </p>
+                            <a href="linklink.html" class="project-link" target="_blank">
+                                浏览此项目 <i class="fas fa-external-link-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- 项目卡片 3 - 测试长描述 -->
+                    <div class="project-card">
+                        <div class="project-image">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <div class="project-content">
+                            <h3 class="project-title">空项目</h3>
+                            <p class="project-description">
+                                待完善。
+                            </p>
+                            <a href="https://github.com/username/fitness-app" class="project-link" target="_blank">
+                                浏览此项目 <i class="fas fa-external-link-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                </div>
+            </section>
+        </main>
+        
+        <!-- 
+        ============================================
+        页脚部分 - 版权信息和额外链接
+        ============================================
+        
+        修改说明：
+        1. 修改版权信息：将© 2023 DevBlog. All rights reserved.中的年份和名称改为你的信息
+        2. 修改页脚文本：编辑<p>标签中的文本内容
+        3. 添加额外链接：可以在页脚中添加更多链接或信息
+        4. 修改设计者信息：将"Designed with ❤️ by Alex"改为你的名字
+        -->
+        <footer>
+            <p>© 2025 神秘的17. 版权所有.</p>
+            <p style="margin-top: 10px; font-size: 0.9rem; color: var(--gray-color);">
+                通过Gemini和Deepseek辅助设计 | 通过HTML, CSS & JavaScript构建
+            </p>
+        </footer>
+    </div>
+    
+    <!-- 
+    ============================================
+    JavaScript代码 - 交互功能和主题切换
+    ============================================
+    
+    修改说明：
+    1. 主题切换功能：这段代码实现了亮色/暗色主题切换
+       - 点击右上角的月亮/太阳图标可以切换主题
+       - 主题偏好会保存在浏览器的localStorage中，下次访问时自动应用
+    2. 添加更多交互功能：可以在这里添加其他JavaScript功能
+       - 示例：表单验证、动画效果、API调用等
+    3. 调试：如果主题切换不工作，检查浏览器控制台是否有错误
+       - 按F12打开开发者工具，查看Console标签页
+    -->
+    <script>
+        // 等待页面完全加载后执行
+        document.addEventListener('DOMContentLoaded', function() {
+            // 获取主题切换按钮
+            const themeToggle = document.getElementById('themeToggle');
+            const themeIcon = themeToggle.querySelector('i');
+            
+            // 检查localStorage中保存的主题偏好
+            const savedTheme = localStorage.getItem('theme');
+            
+            // 如果有保存的主题，应用它
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-theme');
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            }
+            
+            // 主题切换按钮点击事件
+            themeToggle.addEventListener('click', function() {
+                // 切换暗色主题类
+                document.body.classList.toggle('dark-theme');
+                
+                // 更新图标
+                if (document.body.classList.contains('dark-theme')) {
+                    themeIcon.classList.remove('fa-moon');
+                    themeIcon.classList.add('fa-sun');
+                    // 保存主题偏好到localStorage
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    themeIcon.classList.remove('fa-sun');
+                    themeIcon.classList.add('fa-moon');
+                    // 保存主题偏好到localStorage
+                    localStorage.setItem('theme', 'light');
+                }
+            });
+            
+            // 为所有项目链接添加点击动画
+            const projectLinks = document.querySelectorAll('.project-link');
+            projectLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // 添加点击反馈
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 200);
+                });
+            });
+            
+            // 控制台欢迎信息（仅用于演示，用户看不到）
+            console.log('🎉 Welcome to DevBlog!');
+            console.log('💡 Tip: Click the moon icon in the top right to toggle dark mode.');
+        });
+    </script>
+</body>
+</html>
