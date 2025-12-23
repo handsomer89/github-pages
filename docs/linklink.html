@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>可爱连连看</title>
+    <title>食品连连看</title>
     <style>
         :root {
             --bg-color: #fff5f7;
             --accent-color: #ff6b81;
-            /* 手机端格子大小会根据屏幕宽度动态计算 */
             --grid-gap: 4px;
         }
 
@@ -21,28 +20,28 @@
             justify-content: center;
             min-height: 100vh;
             margin: 0;
-            touch-action: manipulation; /* 禁止双击缩放，提升点击响应 */
+            touch-action: manipulation;
         }
 
-        h1 { font-size: 1.5rem; color: var(--accent-color); margin: 10px 0; }
+        h1 { font-size: 1.4rem; color: var(--accent-color); margin: 10px 0; }
 
         .stats { margin-bottom: 10px; font-weight: bold; color: #555; }
 
-        /* 核心容器：预留外部连线空间 */
+        /* 8x8 容器：宽高比改为 1:1 */
         .container {
             position: relative;
-            width: 90vw; /* 占据屏幕宽度的90% */
-            max-width: 500px;
-            aspect-ratio: 10 / 8; /* 保持棋盘比例 */
+            width: 92vw;
+            max-width: 450px;
+            aspect-ratio: 1 / 1; 
             background: #ffe0e6;
             border-radius: 12px;
-            padding: 25px; /* 这里的padding给外围连线留出空间 */
+            padding: 30px; /* 预留给外围连线 */
             box-sizing: border-box;
         }
 
         #game-board {
             display: grid;
-            grid-template-columns: repeat(10, 1fr);
+            grid-template-columns: repeat(8, 1fr);
             grid-template-rows: repeat(8, 1fr);
             gap: var(--grid-gap);
             width: 100%;
@@ -63,42 +62,45 @@
 
         .cell {
             background-color: #fff;
-            border-radius: 4px;
+            border-radius: 6px;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 5vw; /* 字体随屏幕缩放 */
+            font-size: 7vw; /* 8格布局，图标可以更大 */
             cursor: pointer;
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            user-select: none;
         }
 
-        @media (min-width: 500px) {
-            .cell { font-size: 24px; }
+        @media (min-width: 450px) {
+            .cell { font-size: 32px; }
         }
 
         .cell.selected {
-            outline: 2px solid var(--accent-color);
+            outline: 3px solid var(--accent-color);
             background-color: #ffe0e6;
-            transform: scale(0.9);
+            transform: scale(0.92);
         }
 
-        .cell.empty { visibility: hidden; }
+        .cell.empty { visibility: hidden; pointer-events: none; }
 
         .btn {
             margin: 15px 0;
-            padding: 12px 30px;
+            padding: 12px 35px;
             background: var(--accent-color);
             color: white;
             border: none;
             border-radius: 25px;
             font-size: 1rem;
             font-weight: bold;
+            box-shadow: 0 4px 0 #e65a70;
         }
+        .btn:active { transform: translateY(2px); box-shadow: 0 2px 0 #e65a70; }
     </style>
 </head>
 <body>
 
-    <h1>🍰 可爱食品连连看 🍩</h1>
+    <h1>🍰 食品连连看🍩</h1>
     <div class="stats">剩余对数: <span id="count">0</span></div>
     
     <div class="container" id="main-container">
@@ -106,24 +108,22 @@
         <div id="game-board"></div>
     </div>
 
-    <button class="btn" onclick="initGame()">重新开始游戏</button>
+    <button class="btn" onclick="initGame()">重新开始</button>
 
     <script>
-        const ROWS = 8;
-        const COLS = 10;
-        const FOODS = ['🍦', '🍩', '🍰', '🍭', '🍓', '🍑', '🍇', '🍉', '🍔', '🍕', '🍟', '🍣', '🍱', '🍮', '🍫'];
+        const SIZE = 8; // 8x8 布局
+        const FOODS = ['🍦', '🍩', '🍰', '🍭', '🍓', '🍑', '🍇', '🍉', '🍔', '🍕', '🍟', '🍣', '🍱', '🍮', '🍫', '🍪', '🍙', '🍎'];
         
         let board = [];
         let firstSelection = null;
         let remainingPairs = 0;
         let canvas, ctx;
 
-        // 初始化游戏
         function initGame() {
             canvas = document.getElementById('line-canvas');
             ctx = canvas.getContext('2d');
             
-            // 获取容器实际像素大小并设置 Canvas 分辨率（防模糊）
+            // 响应式画布初始化
             const rect = canvas.getBoundingClientRect();
             canvas.width = rect.width * window.devicePixelRatio;
             canvas.height = rect.height * window.devicePixelRatio;
@@ -132,8 +132,9 @@
             const boardElement = document.getElementById('game-board');
             boardElement.innerHTML = '';
             
+            // 生成 64 个格子（32对）
             let items = [];
-            for (let i = 0; i < (ROWS * COLS) / 2; i++) {
+            for (let i = 0; i < (SIZE * SIZE) / 2; i++) {
                 let icon = FOODS[Math.floor(Math.random() * FOODS.length)];
                 items.push(icon, icon);
             }
@@ -142,11 +143,16 @@
             remainingPairs = items.length / 2;
             document.getElementById('count').innerText = remainingPairs;
 
-            // 初始化地图数组
-            for (let r = 0; r <= ROWS + 1; r++) {
+            // 构建包含虚拟边界的 10x10 逻辑矩阵 (0~9)
+            board = [];
+            for (let r = 0; r <= SIZE + 1; r++) {
                 board[r] = [];
-                for (let c = 0; c <= COLS + 1; c++) {
-                    board[r][c] = (r === 0 || r === ROWS + 1 || c === 0 || c === COLS + 1) ? null : items.pop();
+                for (let c = 0; c <= SIZE + 1; c++) {
+                    if (r === 0 || r === SIZE + 1 || c === 0 || c === SIZE + 1) {
+                        board[r][c] = null;
+                    } else {
+                        board[r][c] = items.pop();
+                    }
                 }
             }
             renderBoard();
@@ -155,8 +161,8 @@
         function renderBoard() {
             const boardElement = document.getElementById('game-board');
             boardElement.innerHTML = '';
-            for (let r = 1; r <= ROWS; r++) {
-                for (let c = 1; c <= COLS; c++) {
+            for (let r = 1; r <= SIZE; r++) {
+                for (let c = 1; c <= SIZE; c++) {
                     const div = document.createElement('div');
                     div.className = 'cell' + (board[r][c] ? '' : ' empty');
                     div.innerText = board[r][c] || '';
@@ -191,7 +197,7 @@
                     firstSelection = null;
                     document.getElementById('count').innerText = remainingPairs;
                     renderBoard();
-                    if (remainingPairs === 0) alert('恭喜！你已消灭所有美食！🎉');
+                    if (remainingPairs === 0) alert('🎉 太棒了！全部吃光了！');
                 } else {
                     document.querySelectorAll('.cell').forEach(cell => cell.classList.remove('selected'));
                     firstSelection = { r, c };
@@ -200,17 +206,17 @@
             }
         }
 
-        // --- 核心路径逻辑 ---
+        // 连通性算法
         function findPath(r1, c1, r2, c2) {
             if (isDirect(r1, c1, r2, c2)) return [{r:r1,c:c1}, {r:r2,c:c2}];
             
-            let p = {r: r1, c: c2};
-            if (!board[p.r][p.c] && isDirect(r1, c1, p.r, p.c) && isDirect(p.r, p.c, r2, c2)) return [{r:r1,c:c1}, p, {r:r2,c:c2}];
-            p = {r: r2, c: c1};
-            if (!board[p.r][p.c] && isDirect(r1, c1, p.r, p.c) && isDirect(p.r, p.c, r2, c2)) return [{r:r1,c:c1}, p, {r:r2,c:c2}];
+            let p1 = {r: r1, c: c2};
+            if (!board[p1.r][p1.c] && isDirect(r1, c1, p1.r, p1.c) && isDirect(p1.r, p1.c, r2, c2)) return [{r:r1,c:c1}, p1, {r:r2,c:c2}];
+            let p2 = {r: r2, c: c1};
+            if (!board[p2.r][p2.c] && isDirect(r1, c1, p2.r, p2.c) && isDirect(p2.r, p2.c, r2, c2)) return [{r:r1,c:c1}, p2, {r:r2,c:c2}];
 
-            for (let r = 0; r <= ROWS + 1; r++) {
-                for (let c = 0; c <= COLS + 1; c++) {
+            for (let r = 0; r <= SIZE + 1; r++) {
+                for (let c = 0; c <= SIZE + 1; c++) {
                     if (board[r][c] === null) {
                         let subPath = findOneTurnPath(r1, c1, r, c);
                         if (subPath && isDirect(r, c, r2, c2)) return [...subPath, {r, c}, {r:r2, c:c2}];
@@ -239,34 +245,32 @@
             return null;
         }
 
-        // --- 手机自适应绘图逻辑 ---
         function drawPath(points) {
             const container = document.getElementById('main-container');
             const boardEl = document.getElementById('game-board');
-            
-            // 实时获取格子的物理位置
             const firstCell = document.querySelector('.cell');
+            if(!firstCell) return;
+
             const cellRect = firstCell.getBoundingClientRect();
             const boardRect = boardEl.getBoundingClientRect();
             const containerRect = container.getBoundingClientRect();
 
-            // 计算单位格子的中心间距
             const stepW = cellRect.width + parseFloat(getComputedStyle(boardEl).gap);
             const stepH = cellRect.height + parseFloat(getComputedStyle(boardEl).gap);
             
-            // 偏移量：棋盘相对于容器左上角的距离 + 半个格子的宽度
             const offsetX = (boardRect.left - containerRect.left) + cellRect.width / 2;
             const offsetY = (boardRect.top - containerRect.top) + cellRect.height / 2;
 
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.beginPath();
             ctx.strokeStyle = "#ff6b81";
-            ctx.lineWidth = 4;
+            ctx.lineWidth = 5;
             ctx.lineJoin = "round";
             ctx.lineCap = "round";
+            ctx.shadowBlur = 8;
+            ctx.shadowColor = "rgba(255, 107, 129, 0.5)";
 
             points.forEach((p, index) => {
-                // p.r/p.c 是1-indexed，逻辑坐标 0 和 ROWS+1 在棋盘外
                 const x = offsetX + (p.c - 1) * stepW;
                 const y = offsetY + (p.r - 1) * stepH;
                 if (index === 0) ctx.moveTo(x, y);
@@ -276,7 +280,6 @@
         }
 
         window.onload = initGame;
-        // 屏幕旋转或调整大小时重置
         window.onresize = initGame;
     </script>
 </body>
