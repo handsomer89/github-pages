@@ -50,13 +50,6 @@
             letter-spacing: -0.5px;
         }
         
-        .tagline {
-            font-size: 1.2rem;
-            color: #777;
-            font-weight: 400;
-            margin-bottom: 20px;
-        }
-        
         /* 
         主要内容区域样式
         使用卡片式设计，保持简约
@@ -145,7 +138,7 @@
         }
         
         .progress-item {
-            padding: 14px 0; /* 减小内边距，使项目更紧凑 */
+            padding: 12px 0; /* 减小内边距，使项目更紧凑 */
             border-bottom: 1px solid #eee;
             position: relative;
             display: flex;
@@ -157,8 +150,8 @@
         }
         
         .progress-content {
-            font-size: 0.95rem; /* 减小字体大小 */
-            margin-bottom: 6px; /* 减小间距 */
+            font-size: 0.9rem; /* 减小字体大小 */
+            margin-bottom: 5px; /* 减小间距 */
             color: #444;
             line-height: 1.4;
         }
@@ -167,16 +160,16 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.85rem; /* 减小字体大小 */
+            font-size: 0.8rem; /* 减小字体大小 */
             color: #777;
             flex-wrap: wrap; /* 允许在小屏幕上换行 */
         }
         
         .status {
-            padding: 3px 10px; /* 减小内边距 */
-            border-radius: 12px; /* 更小的圆角 */
+            padding: 3px 8px; /* 减小内边距 */
+            border-radius: 10px; /* 更小的圆角 */
             font-weight: 500;
-            font-size: 0.8rem; /* 减小字体大小 */
+            font-size: 0.7rem; /* 减小字体大小 */
             letter-spacing: 0.3px;
         }
         
@@ -299,8 +292,8 @@
     -->
     <header>
         <h1 class="game-title">美味连连</h1>
-        <p class="tagline">一款以美食为主题的休闲益智连连看游戏</p>
-        <p>开发引擎: <span class="tech-badge godot-badge">Godot Engine</span></p>
+        <p>开发工具: <span class="tech-badge godot-badge">Godot Engine</span>
+        <span class="tech-badge">Asepirte</span></p>
     </header>
     
     <main>
@@ -309,34 +302,27 @@
         修改说明：
         1. 可以修改.project-info中的文本内容
         2. 可以调整.highlight中的重点信息
-        3. 可以添加或删除.tech-badge技术标签
         -->
         <section class="section" id="project-intro">
             <h2 class="section-title"><i class="fas fa-info-circle"></i> 项目介绍</h2>
             <div class="project-info">
-                <p>《美味连连》是一款基于Godot引擎开发的休闲益智连连看游戏。游戏以美食为主题，设计了三个特色场景：甜品店、快餐店和中式餐馆。玩家需要在不同场景中匹配相同的美食元素，完成关卡挑战。</p>
+                <p>《美味连连》基于Godot引擎开发，游戏以美食为主题，在连连看游戏的基础上结合闯关与模拟经营元素。计划设计三个特色场景：甜品店、快餐店和中式餐馆。玩家需要在不同场景中匹配相同的美食元素，完成上百个关卡挑战。</p>
                 
-                <p>游戏核心玩法是在限定时间内，找到并连接两个相同的美食图标。连接线最多只能转折两次，且不能穿过其他图标。随着关卡推进，游戏难度会逐渐增加，加入更多障碍和挑战。</p>
+                <p>本人游戏爱好者，在2025年1月期间接触了godot引擎，对其易上手的特性很感兴趣便简单学习了一下。至3月期间<del>女朋友</del> <ins>马上成为妻子</ins>很喜欢连连看游戏，但是手机上的连连看广告很多，于是便想自己使用godot开发一个。
+                    期间正好处于研三末期时间充裕，立志做出一个像开心消消乐一样丰富的连连看游戏。慢悠悠开发至今让我感受到开发独立游戏是一个漫长的过程，试图让我的<del>女朋友</del> <ins>马上成为妻子帮忙画像素画🤦‍♂️但是。。。
+                    现在已经是社畜了，但是不能让这个项目烂尾，我要继续慢悠悠的完成，用这个日志来督促我自己完成！！！
+                    </p>
                 
                 <div class="highlight">
                     <p><strong>游戏特色：</strong></p>
                     <ul>
                         <li>三个主题场景：甜品店、快餐店、中式餐馆</li>
                         <li>超过100个精心设计的关卡</li>
-                        <li>多种游戏模式：经典模式、计时挑战、无限模式</li>
-                        <li>精美的美食图标和动画效果</li>
-                        <li>轻松愉快的背景音乐和音效</li>
+                        <li>多种游戏模式：计分or计时模式，方块下落、隐藏、冻结、迷雾等等</li>
+                        <li>严格的640*480像素美术风格</li>
+                        <li>通过闯关获得金币升级你的店铺</li>
                     </ul>
                 </div>
-                
-                <p><strong>技术实现：</strong>游戏使用Godot Engine 4.0开发，采用GDScript编写游戏逻辑。UI系统使用Godot内置的Control节点，游戏核心算法实现了高效的路径查找和匹配检测。</p>
-                
-                <p>
-                    <span class="tech-badge">GDScript</span>
-                    <span class="tech-badge godot-badge">Godot 4.0</span>
-                    <span class="tech-badge">矢量图形</span>
-                    <span class="tech-badge">响应式UI</span>
-                </p>
             </div>
         </section>
         
@@ -376,143 +362,108 @@
             </div>
             
             <ul class="progress-list">
-                <!-- 进度项1：已完成 -->
+                <!-- 进度项 -->
                 <li class="progress-item">
-                    <div class="progress-content">游戏核心机制实现（连线匹配算法）</div>
+                    <div class="progress-content">游戏核心机制-连线匹配算法</div>
+                    <div class="progress-meta">
+                        <span class="status status-torefactor">待重构</span>
+                        <span class="date">2025-12-24</span>
+                    </div>
+                </li>
+                
+                <!-- 进度项 -->
+                <li class="progress-item">
+                    <div class="progress-content">甜品店主题场景设计与美术资源制作</div>
                     <div class="progress-meta">
                         <span class="status status-completed">已完成</span>
-                        <span class="date">2023-10-15</span>
+                        <span class="date">2025-12-1</span>
                     </div>
                 </li>
                 
-                <!-- 进度项2：开发中 -->
+                <!-- 进度项 -->
                 <li class="progress-item">
-                    <div class="progress-content">甜品店主题场景设计与资源制作（完成度70%）</div>
-                    <div class="progress-meta">
-                        <span class="status status-inprogress">开发中</span>
-                        <span class="date">预计2023-11-30完成</span>
-                    </div>
-                </li>
-                
-                <!-- 进度项3：开发中 -->
-                <li class="progress-item">
-                    <div class="progress-content">快餐店主题关卡设计（已完成25/30个关卡）</div>
-                    <div class="progress-meta">
-                        <span class="status status-inprogress">开发中</span>
-                        <span class="date">预计2023-12-10完成</span>
-                    </div>
-                </li>
-                
-                <!-- 进度项4：待开始 -->
-                <li class="progress-item">
-                    <div class="progress-content">中式餐馆主题场景与角色设计</div>
-                    <div class="progress-meta">
-                        <span class="status status-pending">待开始</span>
-                        <span class="date">计划2023-12-15开始</span>
-                    </div>
-                </li>
-                
-                <!-- 进度项5：已完成 -->
-                <li class="progress-item">
-                    <div class="progress-content">游戏主菜单和UI界面设计（包括设置界面）</div>
-                    <div class="progress-meta">
-                        <span class="status status-completed">已完成</span>
-                        <span class="date">2023-09-28</span>
-                    </div>
-                </li>
-                
-                <!-- 进度项6：重构中 -->
-                <li class="progress-item">
-                    <div class="progress-content">优化关卡加载逻辑，减少内存占用</div>
+                    <div class="progress-content">消除场景架构搭建（方格生成、消除、移动、状态支持）</div>
                     <div class="progress-meta">
                         <span class="status status-refactoring">重构中</span>
-                        <span class="date">进行中</span>
+                        <span class="date">2026-1-2</span>
+                    </div>
+                </li>
+
+                <!-- 进度项 -->
+                <li class="progress-item">
+                    <div class="progress-content">实现关卡编辑器、方便编辑生成关卡</div>
+                    <div class="progress-meta">
+                        <span class="status status-inprogress">开发中</span>
+                        <span class="date">2025-12-24</span>
+                    </div>
+                </li>
+
+                <!-- 进度项 -->
+                <li class="progress-item">
+                    <div class="progress-content">适配godot主题的游戏菜单UI绘制</div>
+                    <div class="progress-meta">
+                        <span class="status status-pending">待开始</span>
+                        <span class="date">2025-12-24</span>
+                    </div>
+                </li>
+
+                <!-- 进度项 -->
+                <li class="progress-item">
+                    <div class="progress-content">游戏主菜单和设置界面</div>
+                    <div class="progress-meta">
+                        <span class="status status-torefactor">待重构</span>
+                        <span class="date">2025-12-24</span>
                     </div>
                 </li>
                 
-                <!-- 进度项7：待重构 -->
+                <!-- 进度项 -->
                 <li class="progress-item">
                     <div class="progress-content">音效管理系统代码重构</div>
                     <div class="progress-meta">
                         <span class="status status-torefactor">待重构</span>
-                        <span class="date">计划2024-01-10开始</span>
+                        <span class="date">2025-12-24</span>
                     </div>
                 </li>
                 
-                <!-- 进度项8：开发中 -->
+                <!-- 进度项 -->
                 <li class="progress-item">
-                    <div class="progress-content">实现关卡星级评分系统</div>
+                    <div class="progress-content">实现关卡评分系统</div>
                     <div class="progress-meta">
-                        <span class="status status-inprogress">开发中</span>
-                        <span class="date">预计2023-11-20完成</span>
+                        <span class="status status-pending">待开始</span>
+                        <span class="date">2025-12-24</span>
                     </div>
                 </li>
                 
-                <!-- 进度项9：已完成 -->
+                <!-- 进度项 -->
                 <li class="progress-item">
-                    <div class="progress-content">基础音效和背景音乐制作（完成核心音效）</div>
-                    <div class="progress-meta">
-                        <span class="status status-completed">已完成</span>
-                        <span class="date">2023-10-10</span>
-                    </div>
-                </li>
-                
-                <!-- 进度项10：待重构 -->
-                <li class="progress-item">
-                    <div class="progress-content">优化甜品店场景的资源加载流程</div>
+                    <div class="progress-content">基础音效和背景音乐</div>
                     <div class="progress-meta">
                         <span class="status status-torefactor">待重构</span>
-                        <span class="date">计划2023-12-05开始</span>
+                        <span class="date">2025-12-24</span>
                     </div>
                 </li>
                 
-                <!-- 进度项11：开发中 -->
+                <!-- 进度项 -->
                 <li class="progress-item">
                     <div class="progress-content">实现玩家数据本地存储功能</div>
                     <div class="progress-meta">
-                        <span class="status status-inprogress">开发中</span>
-                        <span class="date">预计2023-11-25完成</span>
+                        <span class="status status-pending">待开始</span>
+                        <span class="date">2025-12-24</span>
                     </div>
                 </li>
                 
-                <!-- 进度项12：待开始 -->
+                <!-- 进度项 -->
                 <li class="progress-item">
-                    <div class="progress-content">多平台适配测试（Windows, macOS, Android）</div>
+                    <div class="progress-content">只有甜品店的基本demo</div>
                     <div class="progress-meta">
                         <span class="status status-pending">待开始</span>
-                        <span class="date">计划2024-02-01开始</span>
+                        <span class="date">2025-12-24</span>
                     </div>
                 </li>
             </ul>
         </section>
     </main>
     
-    <!-- 
-    编辑说明部分
-    这部分说明了如何修改网页内容
-    当你熟悉代码后，可以删除这部分
-    -->
-    <div class="edit-note">
-        <h3>如何修改此页面内容：</h3>
-        <ul>
-            <li><strong>修改项目介绍：</strong>找到<code>#project-intro</code>部分，直接修改文字内容</li>
-            <li><strong>添加/删除进度项：</strong>在<code>#project-progress</code>部分，复制或删除<code>.progress-item</code>元素</li>
-            <li><strong>修改进度状态：</strong>更改<code>.status</code>的类名为：
-                <code>status-completed</code>（已完成）、
-                <code>status-inprogress</code>（开发中）、
-                <code>status-pending</code>（待开始）、
-                <code>status-torefactor</code>（待重构）、
-                <code>status-refactoring</code>（重构中）</li>
-            <li><strong>更改日期：</strong>修改<code>.date</code>元素内的文本</li>
-            <li><strong>修改颜色主题：</strong>在CSS中搜索状态颜色代码进行替换：
-                <code>#d4edda</code>（已完成）、
-                <code>#fff3cd</code>（开发中）、
-                <code>#f8d7da</code>（待开始）、
-                <code>#d1ecf1</code>（待重构）、
-                <code>#e2d9f3</code>（重构中）</li>
-            <li><strong>添加新部分：</strong>复制<code>.section</code>元素结构，并修改内容</li>
-        </ul>
-    </div>
     
     <!-- 
     页脚
@@ -520,64 +471,7 @@
     -->
     <footer>
         <p>© 2023 美味连连游戏开发日志 | 使用Godot Engine开发</p>
-        <p>最后更新: 2023-10-25 | 本页面仅用于项目进度跟踪</p>
+        <p>作者: 神秘的17 | 本页面仅用于项目进度跟踪</p>
     </footer>
-    
-    <!-- 
-    简单的JavaScript代码
-    用于动态添加新的进度项（可选功能）
-    如果你不需要，可以删除这个script标签
-    -->
-    <script>
-        // 这个函数可以帮助你动态添加新的进度项
-        // 可以通过浏览器控制台调用此函数
-        function addProgressItem(content, status, date) {
-            const progressList = document.querySelector('.progress-list');
-            
-            // 创建新的进度项元素
-            const newItem = document.createElement('li');
-            newItem.className = 'progress-item';
-            
-            // 根据状态参数确定CSS类
-            let statusClass = 'status-pending';
-            let statusText = '待开始';
-            
-            if (status === 'completed') {
-                statusClass = 'status-completed';
-                statusText = '已完成';
-            } else if (status === 'inprogress') {
-                statusClass = 'status-inprogress';
-                statusText = '开发中';
-            } else if (status === 'torefactor') {
-                statusClass = 'status-torefactor';
-                statusText = '待重构';
-            } else if (status === 'refactoring') {
-                statusClass = 'status-refactoring';
-                statusText = '重构中';
-            }
-            
-            // 设置新进度项的内容
-            newItem.innerHTML = `
-                <div class="progress-content">${content}</div>
-                <div class="progress-meta">
-                    <span class="status ${statusClass}">${statusText}</span>
-                    <span class="date">${date}</span>
-                </div>
-            `;
-            
-            // 将新项目添加到列表末尾
-            progressList.appendChild(newItem);
-            
-            // 滚动到新添加的项目
-            newItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            
-            console.log('已添加新的进度项:', content);
-        }
-        
-        // 控制台提示
-        console.log('美味连连项目页面已加载');
-        console.log('如需动态添加进度项，可在控制台调用: addProgressItem("任务内容", "状态", "日期")');
-        console.log('状态参数: "completed"（已完成）, "inprogress"（开发中）, "torefactor"（待重构）, "refactoring"（重构中）, 或其他（待开始）');
-    </script>
 </body>
 </html>
