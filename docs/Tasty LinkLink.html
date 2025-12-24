@@ -3,684 +3,581 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>美味连连 - 甜品连连看游戏开发日志</title>
+    <title>美味连连 - 游戏开发日志</title>
+    <!-- 引入Google Fonts字体，确保简约风格 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome图标库 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* 
+        基础样式重置和全局设置
+        保持页面风格简约高效
+        */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
-        }
-        
-        :root {
-            --primary-color: #ff9a9e;
-            --secondary-color: #fad0c4;
-            --accent-color: #a18cd1;
-            --dark-color: #6a5b4d;
-            --light-color: #fff9f5;
-            --text-color: #5a4a42;
-            --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            --border-radius: 15px;
         }
         
         body {
-            background: linear-gradient(135deg, #fad0c4 0%, #ffd1ff 100%);
-            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
             line-height: 1.6;
-            min-height: 100vh;
-            background-attachment: fixed;
-        }
-        
-        .container {
+            color: #333;
+            background-color: #f9f9f9;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 20px;
         }
         
-        /* 头部样式 */
+        /* 
+        头部样式
+        包含游戏名称和导航
+        */
         header {
-            background-color: rgba(255, 255, 255, 0.9);
-            box-shadow: var(--shadow);
-            padding: 20px 0;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 3px dashed var(--primary-color);
-        }
-        
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        
-        .logo-icon {
-            color: var(--primary-color);
-            font-size: 2.5rem;
-            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .logo h1 {
-            font-size: 2.2rem;
-            background: linear-gradient(45deg, #ff9a9e, #a18cd1);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 30px;
-        }
-        
-        nav a {
-            text-decoration: none;
-            color: var(--dark-color);
-            font-weight: 600;
-            font-size: 1.1rem;
-            padding: 8px 15px;
-            border-radius: 50px;
-            transition: all 0.3s ease;
-        }
-        
-        nav a:hover {
-            background-color: var(--primary-color);
-            color: white;
-        }
-        
-        /* 主要内容区 */
-        main {
-            padding: 40px 0;
-        }
-        
-        .hero {
-            background-color: rgba(255, 255, 255, 0.85);
-            border-radius: var(--border-radius);
-            padding: 40px;
-            margin-bottom: 40px;
-            box-shadow: var(--shadow);
-            display: flex;
-            align-items: center;
-            gap: 40px;
-            border: 2px dashed var(--accent-color);
-        }
-        
-        .hero-text {
-            flex: 1;
-        }
-        
-        .hero h2 {
-            font-size: 2.5rem;
-            color: var(--dark-color);
-            margin-bottom: 20px;
-            line-height: 1.2;
-        }
-        
-        .hero p {
-            font-size: 1.1rem;
-            margin-bottom: 25px;
-        }
-        
-        .hero-image {
-            flex: 1;
-            border-radius: var(--border-radius);
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            max-width: 500px;
-        }
-        
-        .hero-image img {
-            width: 100%;
-            height: auto;
-            display: block;
-            transition: transform 0.5s ease;
-        }
-        
-        .hero-image:hover img {
-            transform: scale(1.05);
-        }
-        
-        /* 游戏特色区域 */
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-bottom: 40px;
-        }
-        
-        .feature-card {
-            background-color: rgba(255, 255, 255, 0.9);
-            border-radius: var(--border-radius);
-            padding: 30px;
-            box-shadow: var(--shadow);
             text-align: center;
-            transition: transform 0.3s ease;
-            border-top: 5px solid var(--primary-color);
-        }
-        
-        .feature-card:nth-child(2) {
-            border-top-color: var(--accent-color);
-        }
-        
-        .feature-card:nth-child(3) {
-            border-top-color: #ffd166;
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-10px);
-        }
-        
-        .feature-icon {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            color: var(--primary-color);
-        }
-        
-        .feature-card:nth-child(2) .feature-icon {
-            color: var(--accent-color);
-        }
-        
-        .feature-card:nth-child(3) .feature-icon {
-            color: #ffd166;
-        }
-        
-        .feature-card h3 {
-            font-size: 1.8rem;
-            margin-bottom: 15px;
-            color: var(--dark-color);
-        }
-        
-        /* 项目进度区域 */
-        .progress-section {
-            background-color: rgba(255, 255, 255, 0.9);
-            border-radius: var(--border-radius);
-            padding: 40px;
+            padding: 40px 0;
+            border-bottom: 1px solid #eee;
             margin-bottom: 40px;
-            box-shadow: var(--shadow);
-            border-left: 5px solid var(--accent-color);
+        }
+        
+        .game-title {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: #ff6b6b;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+        }
+        
+        .tagline {
+            font-size: 1.2rem;
+            color: #777;
+            font-weight: 400;
+            margin-bottom: 20px;
+        }
+        
+        /* 
+        主要内容区域样式
+        使用卡片式设计，保持简约
+        */
+        main {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 40px;
+        }
+        
+        @media (min-width: 768px) {
+            main {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        .section {
+            background-color: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
         }
         
         .section-title {
-            font-size: 2rem;
-            color: var(--dark-color);
-            margin-bottom: 30px;
-            text-align: center;
-            position: relative;
-            padding-bottom: 15px;
-        }
-        
-        .section-title:after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 4px;
-            background: linear-gradient(to right, var(--primary-color), var(--accent-color));
-            border-radius: 2px;
-        }
-        
-        .timeline {
-            position: relative;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .timeline:before {
-            content: '';
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 4px;
-            height: 100%;
-            background: linear-gradient(to bottom, var(--primary-color), var(--accent-color));
-            border-radius: 2px;
-        }
-        
-        .timeline-item {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #444;
             display: flex;
-            margin-bottom: 40px;
-            position: relative;
+            align-items: center;
         }
         
-        .timeline-item:nth-child(odd) {
-            flex-direction: row;
+        .section-title i {
+            margin-right: 10px;
+            color: #ff6b6b;
         }
         
-        .timeline-item:nth-child(even) {
-            flex-direction: row-reverse;
+        /* 
+        项目介绍部分样式
+        */
+        .project-info {
+            font-size: 1.05rem;
+            color: #555;
         }
         
-        .timeline-content {
-            background-color: white;
-            padding: 25px;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            width: 45%;
-            border: 2px solid var(--secondary-color);
+        .project-info p {
+            margin-bottom: 15px;
         }
         
-        .timeline-date {
-            position: absolute;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: var(--primary-color);
+        .highlight {
+            background-color: #fff9e6;
+            padding: 15px;
+            border-left: 4px solid #ffd166;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .tech-badge {
+            display: inline-block;
+            background-color: #e9ecef;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .godot-badge {
+            background-color: #478cbf;
             color: white;
-            padding: 8px 15px;
-            border-radius: 50px;
-            font-weight: bold;
-            z-index: 1;
-            white-space: nowrap;
         }
         
-        .timeline-item:nth-child(odd) .timeline-content {
-            margin-left: auto;
-            margin-right: 40px;
+        /* 
+        项目进度部分样式 - 紧凑版
+        根据要求，进度条变得更加紧凑，字体变小
+        */
+        .progress-list {
+            list-style-type: none;
         }
         
-        .timeline-item:nth-child(even) .timeline-content {
-            margin-right: auto;
-            margin-left: 40px;
+        .progress-item {
+            padding: 14px 0; /* 减小内边距，使项目更紧凑 */
+            border-bottom: 1px solid #eee;
+            position: relative;
+            display: flex;
+            flex-direction: column;
         }
         
-        .timeline-content h3 {
-            color: var(--dark-color);
-            margin-bottom: 10px;
-            font-size: 1.4rem;
+        .progress-item:last-child {
+            border-bottom: none;
         }
         
-        .progress-bar-container {
-            margin-top: 20px;
+        .progress-content {
+            font-size: 0.95rem; /* 减小字体大小 */
+            margin-bottom: 6px; /* 减小间距 */
+            color: #444;
+            line-height: 1.4;
         }
         
-        .progress-label {
+        .progress-meta {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 8px;
-        }
-        
-        .progress-bar {
-            height: 15px;
-            background-color: #eee;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        
-        .progress {
-            height: 100%;
-            background: linear-gradient(to right, var(--primary-color), var(--accent-color));
-            border-radius: 10px;
-            transition: width 1s ease;
-        }
-        
-        /* 技术栈区域 */
-        .tech-stack {
-            background-color: rgba(255, 255, 255, 0.9);
-            border-radius: var(--border-radius);
-            padding: 40px;
-            margin-bottom: 40px;
-            box-shadow: var(--shadow);
-        }
-        
-        .tech-icons {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 30px;
-            margin-top: 30px;
-        }
-        
-        .tech-item {
-            display: flex;
-            flex-direction: column;
             align-items: center;
-            gap: 10px;
+            font-size: 0.85rem; /* 减小字体大小 */
+            color: #777;
+            flex-wrap: wrap; /* 允许在小屏幕上换行 */
         }
         
-        .tech-icon {
-            font-size: 3rem;
-            color: var(--dark-color);
-            transition: transform 0.3s ease;
+        .status {
+            padding: 3px 10px; /* 减小内边距 */
+            border-radius: 12px; /* 更小的圆角 */
+            font-weight: 500;
+            font-size: 0.8rem; /* 减小字体大小 */
+            letter-spacing: 0.3px;
         }
         
-        .tech-item:hover .tech-icon {
-            transform: scale(1.2);
+        .status-completed {
+            background-color: #d4edda;
+            color: #155724;
         }
         
-        /* 页脚样式 */
+        .status-inprogress {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        
+        .status-pending {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        
+        /* 新增的状态类型 */
+        .status-torefactor {
+            background-color: #d1ecf1;
+            color: #0c5460;
+        }
+        
+        .status-refactoring {
+            background-color: #e2d9f3;
+            color: #483d8b;
+        }
+        
+        .date {
+            font-style: italic;
+            font-size: 0.8rem; /* 减小字体大小 */
+        }
+        
+        /* 
+        页脚样式
+        */
         footer {
-            background-color: rgba(255, 255, 255, 0.9);
-            padding: 30px 0;
             text-align: center;
-            border-top: 3px dashed var(--primary-color);
-            box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.05);
-        }
-        
-        .footer-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-        }
-        
-        .social-links {
-            display: flex;
-            gap: 20px;
-        }
-        
-        .social-links a {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 45px;
-            height: 45px;
-            background-color: var(--primary-color);
-            color: white;
-            border-radius: 50%;
-            font-size: 1.2rem;
-            transition: all 0.3s ease;
-        }
-        
-        .social-links a:hover {
-            background-color: var(--accent-color);
-            transform: translateY(-5px);
-        }
-        
-        .copyright {
-            color: var(--dark-color);
+            margin-top: 60px;
+            padding: 20px;
+            color: #888;
             font-size: 0.9rem;
+            border-top: 1px solid #eee;
         }
         
-        /* 响应式设计 */
-        @media (max-width: 992px) {
-            .hero {
-                flex-direction: column;
-            }
-            
-            .hero-image {
-                max-width: 100%;
-            }
+        /* 
+        状态说明样式
+        展示所有状态类型的说明
+        */
+        .status-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+            margin-bottom: 20px;
+            padding: 12px 15px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            font-size: 0.85rem;
         }
         
-        @media (max-width: 768px) {
-            .header-content {
-                flex-direction: column;
-                gap: 20px;
-            }
-            
-            nav ul {
-                gap: 15px;
-            }
-            
-            .timeline:before {
-                left: 30px;
-            }
-            
-            .timeline-item {
-                flex-direction: row !important;
-            }
-            
-            .timeline-content {
-                width: calc(100% - 80px);
-                margin-left: 80px !important;
-                margin-right: 0 !important;
-            }
-            
-            .timeline-date {
-                left: 30px;
-                transform: translateX(0);
-            }
+        .status-item {
+            display: flex;
+            align-items: center;
+            margin-right: 10px;
         }
         
-        @media (max-width: 576px) {
-            .hero, .progress-section, .tech-stack {
-                padding: 30px 20px;
-            }
-            
-            .hero h2 {
-                font-size: 2rem;
-            }
-            
-            .section-title {
-                font-size: 1.8rem;
-            }
-            
-            .features {
-                grid-template-columns: 1fr;
-            }
+        .status-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 6px;
+        }
+        
+        /* 
+        编辑说明样式
+        提示如何修改内容
+        */
+        .edit-note {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 30px;
+            font-size: 0.9rem;
+            color: #666;
+            border-left: 4px solid #6c757d;
+        }
+        
+        .edit-note h3 {
+            color: #495057;
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+        
+        .edit-note ul {
+            padding-left: 20px;
+        }
+        
+        .edit-note li {
+            margin-bottom: 5px;
+        }
+        
+        .edit-note code {
+            background-color: #e9ecef;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 0.9em;
         }
     </style>
 </head>
 <body>
-    <!-- 头部 -->
+    <!-- 
+    页面头部
+    包含游戏标题和简单描述
+    修改说明：
+    1. 可以修改.game-title中的游戏名称
+    2. 可以修改.tagline中的描述文字
+    -->
     <header>
-        <div class="container header-content">
-            <div class="logo">
-                <i class="fas fa-cookie-bite logo-icon"></i>
-                <h1>美味连连</h1>
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="#about">游戏介绍</a></li>
-                    <li><a href="#features">游戏特色</a></li>
-                    <li><a href="#progress">项目进度</a></li>
-                    <li><a href="#tech">技术栈</a></li>
-                </ul>
-            </nav>
-        </div>
+        <h1 class="game-title">美味连连</h1>
+        <p class="tagline">一款以美食为主题的休闲益智连连看游戏</p>
+        <p>开发引擎: <span class="tech-badge godot-badge">Godot Engine</span></p>
     </header>
-
-    <!-- 主要内容 -->
+    
     <main>
-        <div class="container">
-            <!-- 英雄区域 -->
-            <section class="hero" id="about">
-                <div class="hero-text">
-                    <h2>欢迎来到《美味连连》开发日志！</h2>
-                    <p>《美味连连》是一款以美食为主题的休闲益智游戏，采用Godot引擎开发。游戏背景设定在甜品店、快餐店和中式餐馆三种不同风格的美食场景中，玩家需要通过连接相同的美味食物来完成关卡挑战。</p>
-                    <p>游戏结合了经典的连连看玩法与丰富的美食元素，每一关都有独特的美食主题和挑战目标。从甜美的马卡龙到香脆的炸鸡，从精致的点心到传统的中式美食，让你在享受游戏乐趣的同时也能大饱眼福！</p>
-                    <p>目前游戏正在积极开发中，本页面将定期更新项目进度和开发日志。</p>
+        <!-- 
+        项目介绍部分
+        修改说明：
+        1. 可以修改.project-info中的文本内容
+        2. 可以调整.highlight中的重点信息
+        3. 可以添加或删除.tech-badge技术标签
+        -->
+        <section class="section" id="project-intro">
+            <h2 class="section-title"><i class="fas fa-info-circle"></i> 项目介绍</h2>
+            <div class="project-info">
+                <p>《美味连连》是一款基于Godot引擎开发的休闲益智连连看游戏。游戏以美食为主题，设计了三个特色场景：甜品店、快餐店和中式餐馆。玩家需要在不同场景中匹配相同的美食元素，完成关卡挑战。</p>
+                
+                <p>游戏核心玩法是在限定时间内，找到并连接两个相同的美食图标。连接线最多只能转折两次，且不能穿过其他图标。随着关卡推进，游戏难度会逐渐增加，加入更多障碍和挑战。</p>
+                
+                <div class="highlight">
+                    <p><strong>游戏特色：</strong></p>
+                    <ul>
+                        <li>三个主题场景：甜品店、快餐店、中式餐馆</li>
+                        <li>超过100个精心设计的关卡</li>
+                        <li>多种游戏模式：经典模式、计时挑战、无限模式</li>
+                        <li>精美的美食图标和动画效果</li>
+                        <li>轻松愉快的背景音乐和音效</li>
+                    </ul>
                 </div>
-                <div class="hero-image">
-                    <img src="https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="美味连连游戏概念图">
-                </div>
-            </section>
-
-            <!-- 游戏特色 -->
-            <section id="features">
-                <h2 class="section-title">游戏特色</h2>
-                <div class="features">
-                    <div class="feature-card">
-                        <i class="fas fa-ice-cream feature-icon"></i>
-                        <h3>三大美食主题</h3>
-                        <p>游戏包含甜品店、快餐店和中式餐馆三大主题场景，每种场景都有独特的美术风格和美食元素，带来多样化的视觉体验。</p>
-                    </div>
-                    <div class="feature-card">
-                        <i class="fas fa-gamepad feature-icon"></i>
-                        <h3>创新玩法</h3>
-                        <p>在经典连连看玩法基础上，增加了时间挑战、特殊道具、连锁消除等创新机制，让游戏更具策略性和趣味性。</p>
-                    </div>
-                    <div class="feature-card">
-                        <i class="fas fa-chart-line feature-icon"></i>
-                        <h3>渐进式难度</h3>
-                        <p>精心设计的关卡系统，难度逐步提升。每个主题包含30个独特关卡，共计90个关卡，保证持久的游戏乐趣。</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- 项目进度 -->
-            <section class="progress-section" id="progress">
-                <h2 class="section-title">项目进度</h2>
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <div class="timeline-date">2023年5月</div>
-                        <div class="timeline-content">
-                            <h3>项目启动与策划</h3>
-                            <p>完成游戏核心玩法的设计和原型制作，确定美术风格和主题方向，编写详细的项目计划书。</p>
-                            <div class="progress-bar-container">
-                                <div class="progress-label">
-                                    <span>策划进度</span>
-                                    <span>100%</span>
-                                </div>
-                                <div class="progress-bar">
-                                    <div class="progress" style="width: 100%;"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-date">2023年7月</div>
-                        <div class="timeline-content">
-                            <h3>核心开发阶段</h3>
-                            <p>使用Godot引擎开发游戏核心系统，包括关卡生成算法、连接检测逻辑和基础UI界面。</p>
-                            <div class="progress-bar-container">
-                                <div class="progress-label">
-                                    <span>核心功能</span>
-                                    <span>85%</span>
-                                </div>
-                                <div class="progress-bar">
-                                    <div class="progress" style="width: 85%;"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-date">2023年9月</div>
-                        <div class="timeline-content">
-                            <h3>美术资源制作</h3>
-                            <p>完成甜品店主题的美术资源，包括图标、背景和食物素材。开始制作快餐店主题资源。</p>
-                            <div class="progress-bar-container">
-                                <div class="progress-label">
-                                    <span>美术资源</span>
-                                    <span>60%</span>
-                                </div>
-                                <div class="progress-bar">
-                                    <div class="progress" style="width: 60%;"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-date">2023年11月</div>
-                        <div class="timeline-content">
-                            <h3>音效与优化</h3>
-                            <p>添加游戏音效和背景音乐，进行性能优化和bug修复，准备首次测试版本。</p>
-                            <div class="progress-bar-container">
-                                <div class="progress-label">
-                                    <span>音效与优化</span>
-                                    <span>40%</span>
-                                </div>
-                                <div class="progress-bar">
-                                    <div class="progress" style="width: 40%;"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- 技术栈 -->
-            <section class="tech-stack" id="tech">
-                <h2 class="section-title">技术栈与工具</h2>
-                <p style="text-align: center; max-width: 800px; margin: 0 auto 20px;">《美味连连》使用现代游戏开发工具和技术构建，确保最佳的游戏体验和开发效率。</p>
-                <div class="tech-icons">
-                    <div class="tech-item">
-                        <i class="fab fa-godot-engine tech-icon"></i>
-                        <span>Godot Engine</span>
-                    </div>
-                    <div class="tech-item">
-                        <i class="fas fa-palette tech-icon"></i>
-                        <span>Affinity Designer</span>
-                    </div>
-                    <div class="tech-item">
-                        <i class="fab fa-git-alt tech-icon"></i>
-                        <span>Git版本控制</span>
-                    </div>
-                    <div class="tech-item">
-                        <i class="fas fa-code tech-icon"></i>
-                        <span>GDScript</span>
-                    </div>
-                    <div class="tech-item">
-                        <i class="fas fa-music tech-icon"></i>
-                        <span>BFXR音效工具</span>
-                    </div>
-                </div>
-            </section>
-        </div>
-    </main>
-
-    <!-- 页脚 -->
-    <footer>
-        <div class="container footer-content">
-            <div class="social-links">
-                <a href="#" title="GitHub"><i class="fab fa-github"></i></a>
-                <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
-                <a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
-                <a href="#" title="Discord"><i class="fab fa-discord"></i></a>
+                
+                <p><strong>技术实现：</strong>游戏使用Godot Engine 4.0开发，采用GDScript编写游戏逻辑。UI系统使用Godot内置的Control节点，游戏核心算法实现了高效的路径查找和匹配检测。</p>
+                
+                <p>
+                    <span class="tech-badge">GDScript</span>
+                    <span class="tech-badge godot-badge">Godot 4.0</span>
+                    <span class="tech-badge">矢量图形</span>
+                    <span class="tech-badge">响应式UI</span>
+                </p>
             </div>
-            <p class="copyright">© 2023 美味连连游戏项目 | 使用Godot引擎开发 | 本页面为项目开发日志</p>
-            <p class="copyright">网站设计：与游戏主题相符的甜品风格 | 最后更新：2023年9月</p>
-        </div>
+        </section>
+        
+        <!-- 
+        项目进度部分 - 紧凑版
+        修改说明：
+        1. 可以添加、删除或修改.progress-item中的进度项
+        2. 可以修改.status类来改变状态
+        3. 可以修改.date中的日期
+        4. 可以修改.progress-content中的进度内容
+        -->
+        <section class="section" id="project-progress">
+            <h2 class="section-title"><i class="fas fa-tasks"></i> 项目进度</h2>
+            
+            <!-- 状态说明 -->
+            <div class="status-legend">
+                <div class="status-item">
+                    <div class="status-color" style="background-color: #d4edda;"></div>
+                    <span>已完成</span>
+                </div>
+                <div class="status-item">
+                    <div class="status-color" style="background-color: #fff3cd;"></div>
+                    <span>开发中</span>
+                </div>
+                <div class="status-item">
+                    <div class="status-color" style="background-color: #f8d7da;"></div>
+                    <span>待开始</span>
+                </div>
+                <div class="status-item">
+                    <div class="status-color" style="background-color: #d1ecf1;"></div>
+                    <span>待重构</span>
+                </div>
+                <div class="status-item">
+                    <div class="status-color" style="background-color: #e2d9f3;"></div>
+                    <span>重构中</span>
+                </div>
+            </div>
+            
+            <ul class="progress-list">
+                <!-- 进度项1：已完成 -->
+                <li class="progress-item">
+                    <div class="progress-content">游戏核心机制实现（连线匹配算法）</div>
+                    <div class="progress-meta">
+                        <span class="status status-completed">已完成</span>
+                        <span class="date">2023-10-15</span>
+                    </div>
+                </li>
+                
+                <!-- 进度项2：开发中 -->
+                <li class="progress-item">
+                    <div class="progress-content">甜品店主题场景设计与资源制作（完成度70%）</div>
+                    <div class="progress-meta">
+                        <span class="status status-inprogress">开发中</span>
+                        <span class="date">预计2023-11-30完成</span>
+                    </div>
+                </li>
+                
+                <!-- 进度项3：开发中 -->
+                <li class="progress-item">
+                    <div class="progress-content">快餐店主题关卡设计（已完成25/30个关卡）</div>
+                    <div class="progress-meta">
+                        <span class="status status-inprogress">开发中</span>
+                        <span class="date">预计2023-12-10完成</span>
+                    </div>
+                </li>
+                
+                <!-- 进度项4：待开始 -->
+                <li class="progress-item">
+                    <div class="progress-content">中式餐馆主题场景与角色设计</div>
+                    <div class="progress-meta">
+                        <span class="status status-pending">待开始</span>
+                        <span class="date">计划2023-12-15开始</span>
+                    </div>
+                </li>
+                
+                <!-- 进度项5：已完成 -->
+                <li class="progress-item">
+                    <div class="progress-content">游戏主菜单和UI界面设计（包括设置界面）</div>
+                    <div class="progress-meta">
+                        <span class="status status-completed">已完成</span>
+                        <span class="date">2023-09-28</span>
+                    </div>
+                </li>
+                
+                <!-- 进度项6：重构中 -->
+                <li class="progress-item">
+                    <div class="progress-content">优化关卡加载逻辑，减少内存占用</div>
+                    <div class="progress-meta">
+                        <span class="status status-refactoring">重构中</span>
+                        <span class="date">进行中</span>
+                    </div>
+                </li>
+                
+                <!-- 进度项7：待重构 -->
+                <li class="progress-item">
+                    <div class="progress-content">音效管理系统代码重构</div>
+                    <div class="progress-meta">
+                        <span class="status status-torefactor">待重构</span>
+                        <span class="date">计划2024-01-10开始</span>
+                    </div>
+                </li>
+                
+                <!-- 进度项8：开发中 -->
+                <li class="progress-item">
+                    <div class="progress-content">实现关卡星级评分系统</div>
+                    <div class="progress-meta">
+                        <span class="status status-inprogress">开发中</span>
+                        <span class="date">预计2023-11-20完成</span>
+                    </div>
+                </li>
+                
+                <!-- 进度项9：已完成 -->
+                <li class="progress-item">
+                    <div class="progress-content">基础音效和背景音乐制作（完成核心音效）</div>
+                    <div class="progress-meta">
+                        <span class="status status-completed">已完成</span>
+                        <span class="date">2023-10-10</span>
+                    </div>
+                </li>
+                
+                <!-- 进度项10：待重构 -->
+                <li class="progress-item">
+                    <div class="progress-content">优化甜品店场景的资源加载流程</div>
+                    <div class="progress-meta">
+                        <span class="status status-torefactor">待重构</span>
+                        <span class="date">计划2023-12-05开始</span>
+                    </div>
+                </li>
+                
+                <!-- 进度项11：开发中 -->
+                <li class="progress-item">
+                    <div class="progress-content">实现玩家数据本地存储功能</div>
+                    <div class="progress-meta">
+                        <span class="status status-inprogress">开发中</span>
+                        <span class="date">预计2023-11-25完成</span>
+                    </div>
+                </li>
+                
+                <!-- 进度项12：待开始 -->
+                <li class="progress-item">
+                    <div class="progress-content">多平台适配测试（Windows, macOS, Android）</div>
+                    <div class="progress-meta">
+                        <span class="status status-pending">待开始</span>
+                        <span class="date">计划2024-02-01开始</span>
+                    </div>
+                </li>
+            </ul>
+        </section>
+    </main>
+    
+    <!-- 
+    编辑说明部分
+    这部分说明了如何修改网页内容
+    当你熟悉代码后，可以删除这部分
+    -->
+    <div class="edit-note">
+        <h3>如何修改此页面内容：</h3>
+        <ul>
+            <li><strong>修改项目介绍：</strong>找到<code>#project-intro</code>部分，直接修改文字内容</li>
+            <li><strong>添加/删除进度项：</strong>在<code>#project-progress</code>部分，复制或删除<code>.progress-item</code>元素</li>
+            <li><strong>修改进度状态：</strong>更改<code>.status</code>的类名为：
+                <code>status-completed</code>（已完成）、
+                <code>status-inprogress</code>（开发中）、
+                <code>status-pending</code>（待开始）、
+                <code>status-torefactor</code>（待重构）、
+                <code>status-refactoring</code>（重构中）</li>
+            <li><strong>更改日期：</strong>修改<code>.date</code>元素内的文本</li>
+            <li><strong>修改颜色主题：</strong>在CSS中搜索状态颜色代码进行替换：
+                <code>#d4edda</code>（已完成）、
+                <code>#fff3cd</code>（开发中）、
+                <code>#f8d7da</code>（待开始）、
+                <code>#d1ecf1</code>（待重构）、
+                <code>#e2d9f3</code>（重构中）</li>
+            <li><strong>添加新部分：</strong>复制<code>.section</code>元素结构，并修改内容</li>
+        </ul>
+    </div>
+    
+    <!-- 
+    页脚
+    可以修改版权信息和联系方式
+    -->
+    <footer>
+        <p>© 2023 美味连连游戏开发日志 | 使用Godot Engine开发</p>
+        <p>最后更新: 2023-10-25 | 本页面仅用于项目进度跟踪</p>
     </footer>
-
+    
+    <!-- 
+    简单的JavaScript代码
+    用于动态添加新的进度项（可选功能）
+    如果你不需要，可以删除这个script标签
+    -->
     <script>
-        // 简单的滚动动画效果
-        document.addEventListener('DOMContentLoaded', function() {
-            // 为导航链接添加平滑滚动
-            document.querySelectorAll('nav a').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    
-                    const targetId = this.getAttribute('href');
-                    const targetElement = document.querySelector(targetId);
-                    
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 100,
-                        behavior: 'smooth'
-                    });
-                });
-            });
+        // 这个函数可以帮助你动态添加新的进度项
+        // 可以通过浏览器控制台调用此函数
+        function addProgressItem(content, status, date) {
+            const progressList = document.querySelector('.progress-list');
             
-            // 进度条动画效果
-            const progressBars = document.querySelectorAll('.progress');
-            const observerOptions = {
-                threshold: 0.5
-            };
+            // 创建新的进度项元素
+            const newItem = document.createElement('li');
+            newItem.className = 'progress-item';
             
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const progressBar = entry.target;
-                        const width = progressBar.style.width;
-                        progressBar.style.width = '0%';
-                        
-                        setTimeout(() => {
-                            progressBar.style.width = width;
-                        }, 300);
-                        
-                        observer.unobserve(progressBar);
-                    }
-                });
-            }, observerOptions);
+            // 根据状态参数确定CSS类
+            let statusClass = 'status-pending';
+            let statusText = '待开始';
             
-            progressBars.forEach(bar => {
-                observer.observe(bar);
-            });
-        });
+            if (status === 'completed') {
+                statusClass = 'status-completed';
+                statusText = '已完成';
+            } else if (status === 'inprogress') {
+                statusClass = 'status-inprogress';
+                statusText = '开发中';
+            } else if (status === 'torefactor') {
+                statusClass = 'status-torefactor';
+                statusText = '待重构';
+            } else if (status === 'refactoring') {
+                statusClass = 'status-refactoring';
+                statusText = '重构中';
+            }
+            
+            // 设置新进度项的内容
+            newItem.innerHTML = `
+                <div class="progress-content">${content}</div>
+                <div class="progress-meta">
+                    <span class="status ${statusClass}">${statusText}</span>
+                    <span class="date">${date}</span>
+                </div>
+            `;
+            
+            // 将新项目添加到列表末尾
+            progressList.appendChild(newItem);
+            
+            // 滚动到新添加的项目
+            newItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            
+            console.log('已添加新的进度项:', content);
+        }
+        
+        // 控制台提示
+        console.log('美味连连项目页面已加载');
+        console.log('如需动态添加进度项，可在控制台调用: addProgressItem("任务内容", "状态", "日期")');
+        console.log('状态参数: "completed"（已完成）, "inprogress"（开发中）, "torefactor"（待重构）, "refactoring"（重构中）, 或其他（待开始）');
     </script>
 </body>
 </html>
